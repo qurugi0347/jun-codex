@@ -1,77 +1,77 @@
-# PR Review Reference
+# PR 리뷰 참고 문서
 
-Use a code-review stance: lead with bugs, risks, behavioral regressions, and missing tests. Keep summaries secondary.
+코드 리뷰 관점으로 접근한다. 버그, 위험, 동작 회귀, 누락된 테스트를 먼저 다루고 요약은 뒤에 둔다.
 
-## Review Workflow
+## 리뷰 절차
 
-1. Collect context.
+1. 맥락을 수집한다.
 
 ```bash
 gh pr view <PR-number>
 gh pr diff <PR-number>
 ```
 
-2. Build a review plan.
+2. 리뷰 계획을 작성한다.
 
 ```markdown
-## PR Review Plan
+## PR 리뷰 계획
 
-- [ ] PR scope
-  - Purpose:
-  - Expected behavior change:
-- [ ] File-by-file review
-  - [ ] `file1.ts` - reason to inspect
-  - [ ] `file2.tsx` - reason to inspect
-- [ ] Implementation quality
-  - [ ] Correctness
-  - [ ] Error handling
-  - [ ] Edge cases
-  - [ ] Type safety
-- [ ] Integration
-  - [ ] Breaking changes
-  - [ ] API contracts
-  - [ ] Tests
+- [ ] PR 범위
+  - 목적:
+  - 예상 동작 변경:
+- [ ] 파일별 리뷰
+  - [ ] `file1.ts` - 확인 이유
+  - [ ] `file2.tsx` - 확인 이유
+- [ ] 구현 품질
+  - [ ] 정확성
+  - [ ] 에러 처리
+  - [ ] 엣지 케이스
+  - [ ] 타입 안전성
+- [ ] 통합 영향
+  - [ ] 호환성 깨짐
+  - [ ] API 계약
+  - [ ] 테스트
 ```
 
-3. Review the diff.
+3. diff를 리뷰한다.
 
-- Verify behavior, not only style.
-- Trace changed data and control flow.
-- Check whether tests cover the changed behavior.
-- Check whether user-facing failures have clear handling.
+- 스타일만 보지 않고 실제 동작을 검증한다.
+- 변경된 데이터 흐름과 제어 흐름을 추적한다.
+- 변경된 동작이 테스트로 보호되는지 확인한다.
+- 사용자에게 드러나는 실패가 명확하게 처리되는지 확인한다.
 
-4. Report findings first.
+4. 발견한 문제를 먼저 보고한다.
 
 ```markdown
-## Findings
+## 발견 사항
 
-- [severity] `path/file.ts:line` - Issue summary.
-  Explain the concrete risk and when it happens.
+- [심각도] `path/file.ts:line` - 이슈 요약.
+  구체적인 위험과 발생 조건을 설명합니다.
 
-## Open Questions
+## 확인 질문
 
 - ...
 
-## Summary
+## 요약
 
-Brief change summary only after findings.
+발견 사항 뒤에 짧게 변경 요약을 작성합니다.
 ```
 
-## Focus By PR Type
+## PR 유형별 중점
 
-| Type | Focus |
+| 유형 | 중점 |
 |------|-------|
-| Feature | Correctness, tests, docs, user flow |
-| Bugfix | Root cause, regression coverage |
-| Refactor | Behavior preservation, compatibility |
-| Config | Security, environment compatibility |
-| Dependency | Breaking changes, vulnerabilities |
+| 기능 | 정확성, 테스트, 문서, 사용자 흐름 |
+| 버그 수정 | 근본 원인, 회귀 방지 |
+| 리팩토링 | 동작 보존, 호환성 |
+| 설정 | 보안, 환경 호환성 |
+| 의존성 | 호환성 깨짐, 취약점 |
 
-## Severity
+## 심각도
 
-| Severity | Meaning |
+| 심각도 | 의미 |
 |----------|---------|
-| Critical | Must fix before merge; data loss, security, major breakage |
-| Warning | Should fix; likely bug or maintainability risk |
-| Suggestion | Optional improvement |
-| Question | Needs clarification before confident approval |
+| 필수 수정 | 머지 전 필수 수정. 데이터 손실, 보안, 큰 장애 가능성 |
+| 경고 | 수정 권장. 버그 가능성 또는 유지보수 위험 |
+| 제안 | 선택적 개선 |
+| 질문 | 승인 전 확인이 필요한 질문 |

@@ -1,31 +1,31 @@
-# PR Feedback Apply Reference
+# PR 피드백 반영 참고 문서
 
-Use this when applying review feedback from a pull request or merge request.
+PR 또는 MR의 리뷰 피드백을 코드에 반영할 때 사용한다.
 
-## Workflow
+## 작업 절차
 
-1. Read feedback and diff.
+1. 피드백과 diff를 읽는다.
 
 ```bash
 gh pr view <PR-number> --comments
 gh pr diff <PR-number>
 ```
 
-2. Classify feedback.
+2. 피드백을 분류한다.
 
-| Type | Response |
+| 유형 | 대응 |
 |------|----------|
-| Critical | Apply unless technically impossible, then explain blocker |
-| Suggestion | Apply when it improves the change; otherwise explain tradeoff |
-| Question | Answer directly, with code changes if needed |
+| 필수 수정 | 기술적으로 불가능하지 않으면 반영하고, 불가능하면 차단 사유를 설명 |
+| 제안 | 변경 품질을 높이면 반영하고, 아니면 절충점을 설명 |
+| 질문 | 직접 답변하고 필요하면 코드도 수정 |
 
-3. Edit code.
+3. 코드를 수정한다.
 
-- Keep each fix scoped to the review comment.
-- Preserve unrelated user changes.
-- Add or update tests when feedback changes behavior or fixes a bug.
+- 각 수정은 리뷰 코멘트 범위에 맞춘다.
+- 관련 없는 사용자 변경은 보존한다.
+- 피드백이 동작 변경 또는 버그 수정으로 이어지면 테스트를 추가하거나 갱신한다.
 
-4. Commit review fixes.
+4. 리뷰 반영 커밋을 만든다.
 
 ```bash
 git status
@@ -33,30 +33,30 @@ git add path/to/changed-file
 git commit -m "$(cat <<'EOF'
 FIX: PR 리뷰 피드백 반영
 
-- [Critical] 반영 내용
-- [Suggestion] 반영 내용
+- [필수 수정] 반영 내용
+- [제안] 반영 내용
 EOF
 )"
 ```
 
-5. Push and notify.
+5. push하고 알린다.
 
 ```bash
 git push
 gh pr comment <PR-number> --body "리뷰 피드백 반영 완료했습니다. 재확인 부탁드립니다."
 ```
 
-## Response Rules
+## 대응 규칙
 
-- If accepting feedback, update code and mention what changed.
-- If disagreeing, explain the reason and propose an alternative.
-- If a question reveals missing context, add a concise code comment or PR comment.
-- If feedback is out of scope, call that out and suggest a follow-up.
+- 피드백을 수용하면 코드를 수정하고 무엇을 바꿨는지 언급한다.
+- 동의하지 않으면 이유를 설명하고 대안을 제시한다.
+- 질문이 누락된 맥락을 드러내면 간결한 코드 주석 또는 PR 코멘트를 추가한다.
+- 피드백이 범위 밖이면 범위를 명시하고 후속 작업을 제안한다.
 
-## Checklist
+## 체크리스트
 
-- [ ] All Critical feedback is resolved.
-- [ ] Suggestions are applied or answered.
-- [ ] Questions are answered.
-- [ ] Tests/build/lint pass where available.
-- [ ] The PR has a clear update comment if needed.
+- [ ] 모든 필수 수정 피드백을 해결했다.
+- [ ] 제안을 반영하거나 답변했다.
+- [ ] 질문에 답변했다.
+- [ ] 사용 가능한 경우 test/build/lint가 통과한다.
+- [ ] 필요한 경우 PR에 명확한 업데이트 코멘트를 남겼다.

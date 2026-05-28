@@ -1,43 +1,44 @@
 ---
 name: Git
-description: Use when managing git commits, branches, pull requests, PR reviews, or applying review feedback. Includes Korean commit and PR conventions, impact analysis, and safe git workflow guidance.
+description: Git 커밋, 브랜치, PR 작성, PR 리뷰, 리뷰 피드백 반영 작업에 사용한다. 한글 커밋/PR 규칙, 영향 분석, 안전한 Git 작업 절차를 포함한다.
 ---
 
 # Git
 
-Use this skill for commit messages, branch naming, PR creation, PR review, and applying review feedback.
+커밋 메시지 작성, 브랜치 이름 결정, PR 작성, PR 리뷰, 리뷰 피드백 반영 시 이 스킬을 사용한다.
 
-## Quick Rules
+## 빠른 규칙
 
-| Topic | Rule |
+| 주제 | 규칙 |
 |------|------|
-| Commit prefix | `FEAT`, `FIX`, `REFACTOR`, `CHORE`, `DOCS`, `STYLE`, `TEST` |
-| Commit summary | Korean, present tense, under 50 characters when practical |
-| Commit scope | One purpose per commit |
-| PR title | Concise Korean title without prefix |
-| PR body | Include Summary, Why, What, How, main changes, and side effects |
-| Git safety | Add explicit files; avoid broad staging and destructive commands |
+| 커밋 prefix | `FEAT`, `FIX`, `REFACTOR`, `CHORE`, `DOCS`, `STYLE`, `TEST` |
+| 커밋 요약 | 한글, 현재형, 가능하면 50자 이내 |
+| 커밋 단위 | 한 커밋은 한 가지 목적만 포함 |
+| PR 제목 | prefix 없이 간결한 한글 제목 |
+| PR 본문 | 요약, 의도, 문제, 해결 방법, 주요 변경사항, 사이드 이펙트 포함 |
+| Git 안전 규칙 | 파일을 명시해서 add하고, 광범위 staging과 파괴적 명령을 피함 |
 
-## References
+## 참고 문서
 
-Load the relevant reference only when the task needs it:
+작업에 필요한 참고 문서만 읽는다.
 
-| Task | Reference |
+| 작업 | 참고 문서 |
 |------|-----------|
-| Commit, branch, or PR creation | [references/git.md](references/git.md) |
-| PR/MR code review | [references/pr-review.md](references/pr-review.md) |
-| Applying review feedback | [references/pr-apply.md](references/pr-apply.md) |
+| 커밋, 브랜치 작업 | [references/commit.md](references/commit.md) |
+| PR 생성 | [references/pr-create.md](references/pr-create.md) |
+| PR/MR 코드 리뷰 | [references/pr-review.md](references/pr-review.md) |
+| 리뷰 피드백 반영 | [references/pr-apply.md](references/pr-apply.md) |
 
-## Codex Usage Examples
+## Codex 사용 예시
 
 - `$Git 커밋 메시지 작성하고 필요한 파일만 add해서 커밋해줘`
 - `$Git 현재 브랜치 변경사항 기준으로 PR 본문 작성해줘`
 - `$Git PR 123 리뷰해줘`
 - `$Git PR 리뷰 피드백 확인하고 반영해줘`
 
-## Safety Defaults
+## 기본 안전 규칙
 
-- Inspect `git status` before staging or committing.
-- Stage only files that belong to the requested change.
-- Do not run destructive git commands unless the user explicitly requested them.
-- Prefer `git push --force-with-lease` over `git push --force` when rewriting remote history is explicitly needed.
+- staging 또는 commit 전에 `git status`를 확인한다.
+- 요청된 변경에 속한 파일만 staging한다.
+- 사용자가 명시적으로 요청하지 않은 파괴적 Git 명령은 실행하지 않는다.
+- 원격 이력 재작성 필요성이 명확할 때도 `git push --force`보다 `git push --force-with-lease`를 우선한다.
