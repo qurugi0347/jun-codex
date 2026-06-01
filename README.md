@@ -1,6 +1,6 @@
 # jun-codex
 
-Codex용 개인 skills/settings 설치 CLI입니다. 현재 1차 범위는 Git 관리 skill과 `~/.codex` 설치/update/validate 기능입니다.
+Codex용 개인 skills/settings 설치 CLI입니다. Git 관리 skill과 Claude Code command를 옮긴 task skill을 `~/.codex`에 설치합니다.
 
 ## 설치 대상
 
@@ -15,18 +15,23 @@ Codex용 개인 skills/settings 설치 CLI입니다. 현재 1차 범위는 Git �
 ~/.codex/
 ├── .jun-codex-installed.json
 └── skills/
-    └── Git/
-        ├── SKILL.md
-        └── references/
-            ├── git.md
-            ├── pr-review.md
-            └── pr-apply.md
+    ├── Git/
+    │   ├── SKILL.md
+    │   └── references/
+    │       ├── commit.md
+    │       ├── pr-create.md
+    │       ├── pr-review.md
+    │       └── pr-apply.md
+    ├── TaskPlan/
+    ├── TaskCodeWrite/
+    ├── TaskCodeReview/
+    └── TaskReviewPlan/
 ```
 
 ## 사용법
 
 ```bash
-npm run build
+pnpm build
 node dist/cli.js --dry-run
 node dist/cli.js --force
 ```
@@ -66,13 +71,28 @@ $Git 필요한 파일만 add해서 커밋해줘
 $Git PR 본문 작성해줘
 $Git PR 123 리뷰해줘
 $Git PR 리뷰 피드백 반영해줘
+$TaskPlan 요청 내용 기준으로 계획 문서 작성해줘
+$TaskCodeWrite plan 기준으로 구현해줘
+$TaskCodeReview 현재 구현을 plan 기준으로 리뷰해줘
+$TaskReviewPlan 구현 전에 plan을 검토해줘
 ```
+
+## 포함 Skills
+
+| Skill | 설명 |
+|------|------|
+| `Git` | 커밋, 브랜치, PR 생성, PR 리뷰, 리뷰 피드백 반영 |
+| `TaskPlan` | `.codex/plan/` 문서 3종 작성 |
+| `TaskCodeWrite` | plan/checklist 기반 구현과 task 단위 검증 |
+| `TaskCodeReview` | plan과 구현 diff 기반 코드 리뷰 |
+| `TaskReviewPlan` | 구현 전 plan 문서 리뷰 |
 
 ## 포함/제외 범위
 
 포함:
 
 - `Git` skill
+- `TaskPlan`, `TaskCodeWrite`, `TaskCodeReview`, `TaskReviewPlan` skill
 - commit/branch/PR 작성 규칙
 - PR review/reference 문서
 - PR feedback apply/reference 문서
@@ -82,7 +102,7 @@ $Git PR 리뷰 피드백 반영해줘
 
 제외:
 
-- Claude 전용 `commands/`
+- Claude 전용 `commands/` 파일 자체
 - Claude 전용 `agents/`
 - Claude 전용 `hooks/`
 - statusline 설정
@@ -92,6 +112,6 @@ $Git PR 리뷰 피드백 반영해줘
 ## 개발
 
 ```bash
-npm install
-npm test
+pnpm install
+pnpm test
 ```
