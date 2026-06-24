@@ -15,6 +15,11 @@ Codex용 개인 skills/settings 설치 CLI입니다. Git 관리 skill과 Claude 
 ~/.codex/
 ├── .jun-codex-installed.json
 └── skills/
+    ├── Backend/
+    ├── Coding/
+    ├── ContextHandoff/
+    ├── Director/
+    ├── Documentation/
     ├── Git/
     │   ├── SKILL.md
     │   └── references/
@@ -22,10 +27,16 @@ Codex용 개인 skills/settings 설치 CLI입니다. Git 관리 skill과 Claude 
     │       ├── pr-create.md
     │       ├── pr-review.md
     │       └── pr-apply.md
+    ├── Planning/
+    ├── PromptStructuring/
+    ├── React/
+    ├── Reporting/
+    ├── SessionWrap/
     ├── TaskPlan/
     ├── TaskCodeWrite/
     ├── TaskCodeReview/
-    └── TaskReviewPlan/
+    ├── TaskReviewPlan/
+    └── TypeORM/
 ```
 
 ## 사용법
@@ -75,23 +86,38 @@ $TaskPlan 요청 내용 기준으로 계획 문서 작성해줘
 $TaskCodeWrite plan 기준으로 구현해줘
 $TaskCodeReview 현재 구현을 plan 기준으로 리뷰해줘
 $TaskReviewPlan 구현 전에 plan을 검토해줘
+$React 폼 컴포넌트 구현 패턴 확인해줘
+$Backend NestJS 서비스 테스트 작성해줘
+$SessionWrap 현재 브랜치 작업 정리해줘
 ```
 
 ## 포함 Skills
 
 | Skill | 설명 |
 |------|------|
+| `Backend` | NestJS 레이어 책임, DTO/Entity 변환, BDD 테스트 |
+| `Coding` | 공통 설계 원칙, 결합도/응집도, 가독성 규칙 |
+| `ContextHandoff` | 긴 작업 인수인계용 HANDOFF.md 작성 |
+| `Director` | 프로젝트 스펙 문서와 충돌 검증 |
+| `Documentation` | Codex 문서와 skill 작성 규칙 |
 | `Git` | 커밋, 브랜치, PR 생성, PR 리뷰, 리뷰 피드백 반영 |
+| `Planning` | `.codex/plan/` 문서 3종 작성 템플릿 |
+| `PromptStructuring` | skill/프롬프트 구조화, frontmatter, 출력 최적화 |
+| `React` | React 컴포넌트, hook, router, form, styling 패턴 |
+| `Reporting` | 작업 결과 보고 형식 |
+| `SessionWrap` | 브랜치 diff 기반 세션 정리와 후속 작업 도출 |
 | `TaskPlan` | `.codex/plan/` 문서 3종 작성 |
 | `TaskCodeWrite` | plan/checklist 기반 구현과 task 단위 검증 |
 | `TaskCodeReview` | plan과 구현 diff 기반 코드 리뷰 |
 | `TaskReviewPlan` | 구현 전 plan 문서 리뷰 |
+| `TypeORM` | TypeORM 쿼리 선택 기준과 migration 규칙 |
 
 ## 포함/제외 범위
 
 포함:
 
 - `Git` skill
+- `Backend`, `Coding`, `Documentation`, `React`, `TypeORM` 등 Claude Code global skill을 Codex용으로 변환한 skill
 - `TaskPlan`, `TaskCodeWrite`, `TaskCodeReview`, `TaskReviewPlan` skill
 - commit/branch/PR 작성 규칙
 - PR review/reference 문서
