@@ -23,6 +23,14 @@ plan 문서와 구현된 코드를 함께 검토하는 코드 리뷰 skill이다
 | `.codex/plan/checklist.md` | 완료된 task와 누락 task 확인 |
 | `git diff main...HEAD` 또는 최근 커밋 diff | 실제 구현 변경 확인 |
 
+## PR 라인 코멘트
+
+remote repository가 GitHub이고 GitHub CLI가 인증 및 연결되어 있으면, 파일:라인으로 매핑 가능한 Critical/Warning 이슈는 PR의 해당 diff line에 GitHub review comment로 직접 남긴다.
+
+- 실제 변경 diff에 포함된 line에만 코멘트를 남긴다.
+- diff line으로 매핑할 수 없는 설계/전체 흐름 이슈는 최종 리뷰 결과에만 남긴다.
+- 최종 응답에는 PR에 남긴 line comment 수와 남기지 못한 이슈를 구분해 보고한다.
+
 ## 리뷰 관점
 
 ### 1. 목적 부합성
