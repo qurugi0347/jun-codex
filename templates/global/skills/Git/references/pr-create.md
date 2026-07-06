@@ -41,6 +41,24 @@ changed function/component -> caller -> caller's caller -> user-facing path
 
 ## PR 본문 템플릿
 
+프로젝트 PR template이 있으면 아래 기본 템플릿보다 우선한다.
+
+```bash
+find . -maxdepth 1 -iname 'pull_request_template.md' -type f
+for dir in .github docs; do
+  if [ -d "$dir" ]; then
+    find "$dir" -maxdepth 3 \
+      \( -iname 'pull_request_template.md' -o -ipath '*/PULL_REQUEST_TEMPLATE/*.md' \) \
+      -type f
+  fi
+done
+```
+
+- PR template의 제목, 섹션 순서, 체크리스트를 보존한다.
+- template의 기존 섹션에 요약, 의도, 문제, 해결 방법, 주요 변경사항, 사이드 이펙트, 호환성 깨짐 여부를 자연스럽게 채운다.
+- 대응되는 섹션이 없으면 가장 가까운 섹션에 짧게 녹이고, 중요한 항목이 빠질 때만 새 섹션을 최소로 추가한다.
+- 프로젝트 PR template이 없을 때만 아래 기본 템플릿을 사용한다.
+
 ```markdown
 ## 요약
 
