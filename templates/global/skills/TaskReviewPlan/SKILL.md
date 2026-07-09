@@ -1,11 +1,11 @@
 ---
 name: TaskReviewPlan
-description: .codex/plan/의 plan.md, context.md, checklist.md를 구현 전에 목적 정합성, 사용자 flow, 유지보수, 성능, 오버엔지니어링 관점으로 리뷰할 때 사용한다.
+description: .codex/plan/의 architecture.md, plan.md, context.md, checklist.md를 구현 전에 목적 정합성, 사용자 flow, 구조 변경 흐름, 유지보수, 성능, 오버엔지니어링 관점으로 리뷰할 때 사용한다.
 ---
 
 # TaskReviewPlan
 
-작성된 plan 문서 3종을 구현 전에 검토하고 개선점을 제안할 때 사용한다.
+작성된 plan 문서 4종을 구현 전에 검토하고 개선점을 제안할 때 사용한다.
 
 ## 사용 예시
 
@@ -16,9 +16,32 @@ description: .codex/plan/의 plan.md, context.md, checklist.md를 구현 전에 
 
 | 파일 | 확인 내용 |
 |------|----------|
+| `.codex/plan/architecture.md` | plan.md를 읽기 전에 확인하는 DB 구조 변경, 코드 흐름 변경, 주요 처리 순서의 전체 그림 |
 | `.codex/plan/plan.md` | 목적, 범위, 설계 결정, TaskList |
 | `.codex/plan/context.md` | 사용자 요청 원문, 배경, 결정 근거 |
 | `.codex/plan/checklist.md` | 실행 순서와 검증 항목 |
+
+## 읽기 순서
+
+1. `architecture.md`를 먼저 읽고 변경 전반의 흐름을 파악한다.
+2. `context.md`에서 사용자 요청과 배경을 확인한다.
+3. `plan.md`에서 구현 설계와 TaskList를 검토한다.
+4. `checklist.md`에서 실행 순서와 검증 항목이 architecture 흐름과 맞는지 확인한다.
+
+## Architecture 문서 기준
+
+`architecture.md`는 plan을 읽기 전에 전체 변경 그림을 볼 수 있도록 작성한다.
+
+상세 작성 규칙은 [references/architecture.md](references/architecture.md)를 따른다.
+
+| 기준 | 확인 내용 |
+|------|----------|
+| 흐름 번호 | `1.`, `1-1.`, `1-2.`, `2.`처럼 상위/하위 단계가 드러나는가 |
+| 줄바꿈/들여쓰기 | 단계와 하위 단계가 시각적으로 분리되어 직관적으로 읽히는가 |
+| DB 변경 | 테이블, 컬럼, 관계, 마이그레이션 영향이 순서대로 보이는가 |
+| 코드 흐름 | Controller/Service/Repository, hook/component 등 처리 경로가 순서대로 보이는가 |
+| 변경 전후 | 기존 흐름과 변경 후 흐름의 차이가 한눈에 보이는가 |
+| plan 연결 | 각 흐름이 plan.md의 설계 결정과 TaskList로 이어지는가 |
 
 ## 리뷰 관점
 
@@ -52,6 +75,13 @@ description: .codex/plan/의 plan.md, context.md, checklist.md를 구현 전에 
 - 현재 필요하지 않은 기능이 포함되어 있는가?
 - 더 단순한 구현 방법이 있는가?
 
+### 6. 구조 변경 흐름
+
+- architecture.md만 읽어도 DB/코드 변경의 전체 방향을 이해할 수 있는가?
+- 상위 단계와 하위 단계의 순서가 실제 구현 순서와 맞는가?
+- architecture.md의 흐름이 plan.md의 설계 결정, TaskList, checklist.md 실행 순서와 충돌하지 않는가?
+- DB 구조 변경과 코드 흐름 변경 사이의 의존 관계가 드러나는가?
+
 ## 출력 형식
 
 ```markdown
@@ -79,3 +109,4 @@ description: .codex/plan/의 plan.md, context.md, checklist.md를 구현 전에 
 ```
 
 Critical 이슈가 있으면 구현 전에 수정하도록 구체적인 변경 방향을 제안한다.
+DB 구조 변경이나 코드 흐름 변경이 있는데 `architecture.md`가 없거나 흐름을 파악하기 어렵다면 Warning 이상으로 보고한다.
