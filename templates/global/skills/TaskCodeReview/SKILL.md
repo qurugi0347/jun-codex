@@ -23,13 +23,17 @@ plan 문서와 구현된 코드를 함께 검토하는 코드 리뷰 skill이다
 | `.codex/plan/checklist.md` | 완료된 task와 누락 task 확인 |
 | `git diff main...HEAD` 또는 최근 커밋 diff | 실제 구현 변경 확인 |
 
-## PR 라인 코멘트
+## GitHub PR Inline Comment
 
-remote repository가 GitHub이고 GitHub CLI가 인증 및 연결되어 있으면, 파일:라인으로 매핑 가능한 Critical/Warning 이슈는 PR의 해당 diff line에 GitHub review comment로 직접 남긴다.
+remote repository가 GitHub이면 GitHub CLI로 인증 상태와 현재 branch의 PR을 확인한다. 인증되어 있고 PR이 있으면 파일:라인으로 매핑 가능한 Critical/Warning 이슈를 PR의 해당 diff line에 inline review comment로 남기는 것을 기본 동작으로 한다.
 
-- 실제 변경 diff에 포함된 line에만 코멘트를 남긴다.
+- 기본 동작에서는 inline comment 게시 여부를 사용자에게 다시 확인하지 않고 바로 남긴다.
+- 사용자가 inline comment를 남기지 말라고 명시적으로 요청한 경우에만 GitHub에 게시하지 않고 리뷰 결과를 사용자에게만 전달한다.
+- inline comment는 `gh api`로 PR review comment endpoint를 호출하고 diff 기준 `path`, `line`, `side`를 전달해 게시한다. 일반 PR conversation comment로 대체하지 않는다.
+- 실제 변경 diff에 포함된 line에만 inline comment를 남긴다.
 - diff line으로 매핑할 수 없는 설계/전체 흐름 이슈는 최종 리뷰 결과에만 남긴다.
-- 최종 응답에는 PR에 남긴 line comment 수와 남기지 못한 이슈를 구분해 보고한다.
+- GitHub CLI 미설치, 인증·권한 실패, PR 없음, outdated diff, 일부 comment 게시 실패 등으로 게시할 수 없으면 리뷰는 계속하고 게시하지 못한 이유를 사용자에게 알린다.
+- 최종 응답에는 게시한 inline comment 수, 사용자 요청으로 게시하지 않은 여부, 게시하지 못한 이슈를 구분해 보고한다.
 
 ## 리뷰 관점
 
@@ -105,6 +109,8 @@ remote repository가 GitHub이고 GitHub CLI가 인증 및 연결되어 있으�
 - 목적 달성도:
 - 적용된 리뷰 관점:
 - 미구현 항목:
+- GitHub inline comment: 게시 X건 / 사용자 요청으로 미게시 / 게시 불가(<사유>)
+- 최종 결과에만 남긴 이슈:
 ```
 
 이슈가 없으면 이슈가 없다고 명확히 말하고, 남은 테스트 gap이나 residual risk를 적는다.
