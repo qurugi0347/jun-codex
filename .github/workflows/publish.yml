@@ -32,7 +32,10 @@ jobs:
         run: pnpm test
 
       - name: Verify tag matches package version
-        run: test "${GITHUB_REF_NAME#v}" = "$(node -p \"require('./package.json').version\")"
+        env:
+          TAG_NAME: ${{ github.ref_name }}
+        run: |
+          test "${TAG_NAME#v}" = "$(node -p "require('./package.json').version")"
 
       - name: Publish to npm
         run: npm publish --provenance
