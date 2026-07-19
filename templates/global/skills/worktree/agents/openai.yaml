@@ -1,0 +1,4 @@
+interface:
+  display_name: "Worktree"
+  short_description: "브랜치 기반 worktree와 로컬 설정 준비"
+  default_prompt: "Use $worktree to create a task worktree, copy local .codex and .env settings safely, and verify the workspace."

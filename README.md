@@ -39,7 +39,8 @@ Codex용 개인 global instructions/skills/settings 설치 CLI입니다. 공통 
     ├── TaskPrReviewApplyPlan/
     ├── TaskReviewPlan/
     ├── TypeORM/
-    └── web-styling/
+    ├── web-styling/
+    └── worktree/
 ```
 
 ## 사용법
@@ -90,6 +91,7 @@ $TaskCodeWrite plan 기준으로 구현해줘
 $TaskCodeReview 현재 구현을 plan 기준으로 리뷰해줘
 $TaskPrReviewApplyPlan PR 리뷰 코멘트 반영 계획 작성해줘
 $TaskReviewPlan 구현 전에 plan을 검토해줘
+$worktree feature/coupon에서 pull 받고 TASK 5 PRD-114 작업 준비해줘
 $React 폼 컴포넌트 구현 패턴 확인해줘
 $Backend NestJS 서비스 테스트 작성해줘
 $SessionWrap 현재 브랜치 작업 정리해줘
@@ -117,6 +119,7 @@ $SessionWrap 현재 브랜치 작업 정리해줘
 | `TaskReviewPlan` | 구현 전 plan 문서 리뷰 |
 | `TypeORM` | TypeORM 쿼리 선택 기준과 migration 규칙 |
 | `web-styling` | 반응형 HTML/CSS 레이아웃과 유연한 크기 지정 규칙 |
+| `worktree` | TASK/PRD 작업용 worktree 생성과 `.codex`/`.env` 설정 복사 |
 
 ## 포함/제외 범위
 
@@ -127,6 +130,7 @@ $SessionWrap 현재 브랜치 작업 정리해줘
 - `Backend`, `Coding`, `Documentation`, `React`, `TypeORM` 등 Claude Code global skill을 Codex용으로 변환한 skill
 - `TaskPlan`, `TaskCodeWrite`, `TaskCodeReview`, `TaskPrReviewApplyPlan`, `TaskReviewPlan` skill
 - 반응형 웹 UI 크기 규칙을 적용하는 `web-styling` skill
+- TASK/PRD 작업용 worktree와 로컬 `.codex`/`.env` 설정을 준비하는 `worktree` skill
 - commit/branch/PR 작성 규칙
 - PR review/reference 문서
 - PR feedback apply/reference 문서
