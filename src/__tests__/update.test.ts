@@ -48,3 +48,16 @@ test('computeUpdateStatus returns conflict when template and destination both ch
 
   assert.equal(computeUpdateStatus(file, source, dest, metadata), 'conflict');
 });
+
+test('computeUpdateStatus preserves a user-modified global AGENTS.md', () => {
+  const source = fs.mkdtempSync(path.join(os.tmpdir(), 'jun-codex-source-'));
+  const dest = fs.mkdtempSync(path.join(os.tmpdir(), 'jun-codex-dest-'));
+  const file = 'AGENTS.md';
+  fs.writeFileSync(path.join(source, file), 'base');
+  fs.writeFileSync(path.join(dest, file), 'base');
+  const metadata = buildMetadata([file], source, '1.0.0');
+
+  fs.writeFileSync(path.join(dest, file), 'custom');
+
+  assert.equal(computeUpdateStatus(file, source, dest, metadata), 'user-modified');
+});

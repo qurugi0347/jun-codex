@@ -1,6 +1,6 @@
 # jun-codex
 
-Codex용 개인 skills/settings 설치 CLI입니다. Git 관리 skill과 Claude Code command를 옮긴 task skill을 `~/.codex`에 설치합니다.
+Codex용 개인 global instructions/skills/settings 설치 CLI입니다. 공통 `AGENTS.md`, Git 관리 skill과 Claude Code command를 옮긴 task skill을 `~/.codex`에 설치합니다.
 
 ## 설치 대상
 
@@ -13,6 +13,7 @@ Codex용 개인 skills/settings 설치 CLI입니다. Git 관리 skill과 Claude 
 
 ```text
 ~/.codex/
+├── AGENTS.md
 ├── .jun-codex-installed.json
 └── skills/
     ├── Backend/
@@ -63,7 +64,7 @@ jun-codex validate
 
 | 명령 | 설명 |
 |------|------|
-| `jun-codex` | `templates/global`의 Codex skill을 `$CODEX_HOME` 또는 `~/.codex`에 설치 |
+| `jun-codex` | `templates/global`의 `AGENTS.md`와 Codex skill을 `$CODEX_HOME` 또는 `~/.codex`에 설치 |
 | `jun-codex --dry-run` | 설치될 파일과 상태만 확인 |
 | `jun-codex --force` | 기존 사용자 수정 파일까지 덮어쓰기 |
 | `jun-codex update` | metadata 기준으로 새 템플릿 반영 |
@@ -119,6 +120,7 @@ $SessionWrap 현재 브랜치 작업 정리해줘
 
 포함:
 
+- 모든 workspace에 적용하는 global `AGENTS.md`
 - `Git` skill
 - `Backend`, `Coding`, `Documentation`, `React`, `TypeORM` 등 Claude Code global skill을 Codex용으로 변환한 skill
 - `TaskPlan`, `TaskCodeWrite`, `TaskCodeReview`, `TaskPrReviewApplyPlan`, `TaskReviewPlan` skill

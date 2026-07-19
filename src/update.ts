@@ -1,7 +1,8 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import { copyFile, getAllFiles, getFileHash } from './utils';
+import { copyFile, getFileHash } from './utils';
 import { getCodexHome, getSourceGlobalDir } from './copy';
+import { collectTemplateFiles, isManagedTemplateFile } from './template-files';
 import {
   InstalledMetadata,
   loadMetadata,
@@ -73,10 +74,6 @@ function statusBracket(status: UpdateFileStatus): string {
   }
 }
 
-function collectTemplateFiles(sourceDir: string): string[] {
-  return getAllFiles(sourceDir).filter((file) => file.startsWith('skills/'));
-}
-
 export async function updateCodexFiles(options: UpdateOptions = {}): Promise<void> {
   const { dryRun = false, force = false } = options;
   const sourceDir = getSourceGlobalDir();
@@ -95,7 +92,7 @@ export async function updateCodexFiles(options: UpdateOptions = {}): Promise<voi
 
   if (metadata) {
     for (const file of Object.keys(metadata.files)) {
-      if (!files.includes(file) && file.startsWith('skills/')) {
+      if (!files.includes(file) && isManagedTemplateFile(file)) {
         fileStatuses.push({ file, status: 'removed-upstream' });
       }
     }

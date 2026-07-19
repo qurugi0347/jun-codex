@@ -37,13 +37,21 @@ function validateSkill(skillDir: string, errors: string[]): void {
   }
 }
 
-export async function validateTemplates(): Promise<ValidationResult> {
-  const sourceDir = getSourceGlobalDir();
+export async function validateTemplates(
+  sourceDir: string = getSourceGlobalDir(),
+): Promise<ValidationResult> {
   const errors: string[] = [];
 
   if (!fs.existsSync(sourceDir)) {
     errors.push(`Missing templates/global directory: ${sourceDir}`);
   } else {
+    const agentsMd = path.join(sourceDir, 'AGENTS.md');
+    if (!fs.existsSync(agentsMd)) {
+      errors.push(`Missing global AGENTS.md: ${agentsMd}`);
+    } else if (readText(agentsMd).trim().length === 0) {
+      errors.push(`Empty global AGENTS.md: ${agentsMd}`);
+    }
+
     for (const unsupported of ['commands', 'agents', 'hooks']) {
       if (fs.existsSync(path.join(sourceDir, unsupported))) {
         errors.push(`Unsupported Codex template directory found: ${unsupported}`);

@@ -1,7 +1,7 @@
 {
   "name": "jun-codex",
   "version": "1.0.3",
-  "description": "Codex skills and settings installer",
+  "description": "Codex global instructions, skills, and settings installer",
   "main": "dist/index.js",
   "bin": {
     "jun-codex": "dist/cli.js"

@@ -1,7 +1,8 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import { copyFile, ensureDir, getAllFiles, getFileHash } from './utils';
+import { copyFile, ensureDir, getFileHash } from './utils';
 import { loadMetadata, mergeMetadata, saveMetadata } from './metadata';
+import { collectTemplateFiles } from './template-files';
 
 export interface CopyOptions {
   dryRun?: boolean;
@@ -49,10 +50,6 @@ function statusBracket(status: FileStatus): string {
   }
 }
 
-function collectTemplateFiles(sourceDir: string): string[] {
-  return getAllFiles(sourceDir).filter((file) => file.startsWith('skills/'));
-}
-
 export async function copyCodexFiles(options: CopyOptions = {}): Promise<CopyResult> {
   const { dryRun = false, force = false } = options;
   const sourceDir = getSourceGlobalDir();
@@ -68,7 +65,7 @@ export async function copyCodexFiles(options: CopyOptions = {}): Promise<CopyRes
 
   const files = collectTemplateFiles(sourceDir);
   if (files.length === 0) {
-    console.log('No Codex skill files found.');
+    console.log('No Codex template files found.');
     return { destination: destDir, copiedFiles: [], skippedFiles: [] };
   }
 

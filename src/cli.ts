@@ -16,7 +16,7 @@ interface ParsedArgs {
 function printHelp(): void {
   console.log(`jun-codex ${version}
 
-Install Codex skills into $CODEX_HOME or ~/.codex.
+Install Codex global instructions and skills into $CODEX_HOME or ~/.codex.
 
 Usage:
   jun-codex [--dry-run] [--force]
