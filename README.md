@@ -38,7 +38,8 @@ Codex용 개인 global instructions/skills/settings 설치 CLI입니다. 공통 
     ├── TaskCodeReview/
     ├── TaskPrReviewApplyPlan/
     ├── TaskReviewPlan/
-    └── TypeORM/
+    ├── TypeORM/
+    └── web-styling/
 ```
 
 ## 사용법
@@ -115,6 +116,7 @@ $SessionWrap 현재 브랜치 작업 정리해줘
 | `TaskPrReviewApplyPlan` | PR 리뷰 반영 여부와 수정 방향을 `.codex/plan/pr-review-apply-plan.md`로 계획 |
 | `TaskReviewPlan` | 구현 전 plan 문서 리뷰 |
 | `TypeORM` | TypeORM 쿼리 선택 기준과 migration 규칙 |
+| `web-styling` | 반응형 HTML/CSS 레이아웃과 유연한 크기 지정 규칙 |
 
 ## 포함/제외 범위
 
@@ -124,6 +126,7 @@ $SessionWrap 현재 브랜치 작업 정리해줘
 - `Git` skill
 - `Backend`, `Coding`, `Documentation`, `React`, `TypeORM` 등 Claude Code global skill을 Codex용으로 변환한 skill
 - `TaskPlan`, `TaskCodeWrite`, `TaskCodeReview`, `TaskPrReviewApplyPlan`, `TaskReviewPlan` skill
+- 반응형 웹 UI 크기 규칙을 적용하는 `web-styling` skill
 - commit/branch/PR 작성 규칙
 - PR review/reference 문서
 - PR feedback apply/reference 문서

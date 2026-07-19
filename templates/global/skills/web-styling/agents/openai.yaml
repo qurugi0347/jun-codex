@@ -1,0 +1,4 @@
+interface:
+  display_name: "Web Styling"
+  short_description: "반응형 HTML/CSS, 유동 크기와 접근성 규칙 적용"
+  default_prompt: "Use $web-styling to create a responsive, accessible web UI with fluid sizing and viewport validation."

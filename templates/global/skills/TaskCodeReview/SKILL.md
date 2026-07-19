@@ -1,6 +1,6 @@
 ---
 name: TaskCodeReview
-description: .codex/plan/ 문서와 구현 diff를 함께 보고 목적 부합성, 오버엔지니어링, 성능, 사용자 flow, 유지보수, 보안 관점으로 코드 리뷰할 때 사용한다.
+description: .codex/plan/ 문서와 구현 diff를 함께 보고 목적 부합성, 오버엔지니어링, 성능, 사용자 flow, 유지보수, 보안, 웹 UI 디자인 관점으로 코드 리뷰할 때 사용한다.
 ---
 
 # TaskCodeReview
@@ -22,6 +22,9 @@ plan 문서와 구현된 코드를 함께 검토하는 코드 리뷰 skill이다
 | `.codex/plan/context.md` | 사용자 요청과 결정 근거 확인 |
 | `.codex/plan/checklist.md` | 완료된 task와 누락 task 확인 |
 | `git diff main...HEAD` 또는 최근 커밋 diff | 실제 구현 변경 확인 |
+| [`web-styling`](../web-styling/SKILL.md) | HTML/CSS와 웹 UI 변경의 디자인 검수 기준 확인 |
+
+HTML, CSS, UI component 또는 styling 변경이 diff에 포함되면 `$web-styling` skill을 함께 적용한다.
 
 ## GitHub PR Inline Comment
 
@@ -81,6 +84,13 @@ remote repository가 GitHub이면 GitHub CLI로 인증 상태와 현재 branch�
 - 사용자 입력이 검증되는가?
 - 인증/권한 처리가 올바른가?
 - 민감 정보가 노출되지 않는가?
+
+### 8. 웹 UI 디자인
+
+- HTML, CSS, UI component 또는 styling 변경에는 [`web-styling`](../web-styling/SKILL.md)의 전체 체크리스트를 적용했는가?
+- 불필요한 고정 크기, `clamp()`가 필요한 유동 크기, 터치 영역, keyboard 접근성 문제가 없는가?
+- 프로젝트가 지원하는 viewport와 breakpoint에서 레이아웃을 검증했는가?
+- desktop 전용 backoffice 또는 admin 화면에는 `web-styling`의 관리자 화면 예외를 적용했는가?
 
 ## 출력 형식
 
