@@ -1,6 +1,6 @@
 ---
 name: worktree
-description: Git 저장소에서 base branch를 동기화하고 TASK/PRD 작업용 새 worktree를 생성할 때 사용한다. 기존 `.codex` 하위 내용과 로컬 `.env` 설정을 안전하게 복사하고 의존성 설치와 작업 상태를 검증한다.
+description: Git 저장소에서 base branch를 동기화하고 TASK 작업용 새 worktree를 생성할 때 사용한다. 기존 `.codex` 하위 내용과 로컬 `.env` 설정을 안전하게 복사하고 의존성 설치와 작업 상태를 검증한다.
 ---
 
 # Worktree
@@ -9,8 +9,8 @@ description: Git 저장소에서 base branch를 동기화하고 TASK/PRD 작업�
 
 ## 입력 해석
 
-- 사용자가 `feature/coupon에서 pull 받고 TASK 5 PRD-114 작업 준비해줘`처럼 요청하면 base branch, task 번호, PRD 번호를 추출한다.
-- 사용자가 새 branch 이름을 지정하지 않으면 영문 소문자와 하이픈으로 정규화한 `feature/<prd>-task-<번호>` 형식으로 생성한다. 예: `feature/prd-114-task-5`.
+- 사용자가 `feature/coupon에서 pull 받고 TASK 5 작업 준비해줘`처럼 요청하면 base branch와 TASK 번호를 추출한다.
+- 사용자가 새 branch 이름을 지정하지 않으면 영문 소문자와 하이픈으로 정규화한 `feature/task-<번호>` 형식으로 생성한다. 예: `feature/task-5`.
 - 사용자가 worktree 경로를 지정하지 않으면 현재 저장소와 같은 부모 디렉터리에 `<저장소명>-<branch-slug>` 경로를 사용한다.
 - base branch, 새 branch, worktree 경로가 이미 사용 중이면 기존 worktree나 branch를 덮어쓰지 않고 충돌 내용을 보고한다.
 
@@ -105,7 +105,7 @@ find <source-worktree> \
 ## 요청 예시
 
 ```text
-$worktree feature/coupon에서 pull 받고 TASK 5 PRD-114 작업 준비해줘
+$worktree feature/coupon에서 pull 받고 TASK 5 작업 준비해줘
 ```
 
-이 요청은 `feature/coupon`을 base로 동기화하고 `feature/prd-114-task-5` worktree를 만든 뒤, source의 `.codex`와 local-only `.env` 설정을 안전하게 복사하고 의존성·branch 상태를 검증하는 흐름으로 처리한다.
+이 요청은 `feature/coupon`을 base로 동기화하고 `feature/task-5` worktree를 만든 뒤, source의 `.codex`와 local-only `.env` 설정을 안전하게 복사하고 의존성·branch 상태를 검증하는 흐름으로 처리한다.

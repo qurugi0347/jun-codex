@@ -36,6 +36,7 @@ Codex용 개인 global instructions/skills/settings 설치 CLI입니다. 공통 
     ├── TaskPlan/
     ├── TaskCodeWrite/
     ├── TaskCodeReview/
+    ├── TaskExplainDiff/
     ├── TaskPrReviewApplyPlan/
     ├── TaskReviewPlan/
     ├── TypeORM/
@@ -89,9 +90,10 @@ $Git PR 리뷰 피드백 반영해줘
 $TaskPlan 요청 내용 기준으로 계획 문서 작성해줘
 $TaskCodeWrite plan 기준으로 구현해줘
 $TaskCodeReview 현재 구현을 plan 기준으로 리뷰해줘
+$TaskExplainDiff PR 123을 코드 안 읽고 이해할 수 있게 HTML로 설명해줘
 $TaskPrReviewApplyPlan PR 리뷰 코멘트 반영 계획 작성해줘
 $TaskReviewPlan 구현 전에 plan을 검토해줘
-$worktree feature/coupon에서 pull 받고 TASK 5 PRD-114 작업 준비해줘
+$worktree feature/coupon에서 pull 받고 TASK 5 작업 준비해줘
 $React 폼 컴포넌트 구현 패턴 확인해줘
 $Backend NestJS 서비스 테스트 작성해줘
 $SessionWrap 현재 브랜치 작업 정리해줘
@@ -115,11 +117,12 @@ $SessionWrap 현재 브랜치 작업 정리해줘
 | `TaskPlan` | `.codex/plan/` 문서 3종 작성 |
 | `TaskCodeWrite` | plan/checklist 기반 구현과 task 단위 검증 |
 | `TaskCodeReview` | plan과 구현 diff 기반 코드 리뷰 |
+| `TaskExplainDiff` | PR 코드를 대신 읽고 인터랙티브 HTML 학습 자료 생성 |
 | `TaskPrReviewApplyPlan` | PR 리뷰 반영 여부와 수정 방향을 `.codex/plan/pr-review-apply-plan.md`로 계획 |
 | `TaskReviewPlan` | 구현 전 plan 문서 리뷰 |
 | `TypeORM` | TypeORM 쿼리 선택 기준과 migration 규칙 |
 | `web-styling` | 반응형 HTML/CSS 레이아웃과 유연한 크기 지정 규칙 |
-| `worktree` | TASK/PRD 작업용 worktree 생성과 `.codex`/`.env` 설정 복사 |
+| `worktree` | TASK 작업용 worktree 생성과 `.codex`/`.env` 설정 복사 |
 
 ## 포함/제외 범위
 
@@ -128,9 +131,9 @@ $SessionWrap 현재 브랜치 작업 정리해줘
 - 모든 workspace에 적용하는 global `AGENTS.md`
 - `Git` skill
 - `Backend`, `Coding`, `Documentation`, `React`, `TypeORM` 등 Claude Code global skill을 Codex용으로 변환한 skill
-- `TaskPlan`, `TaskCodeWrite`, `TaskCodeReview`, `TaskPrReviewApplyPlan`, `TaskReviewPlan` skill
+- `TaskPlan`, `TaskCodeWrite`, `TaskCodeReview`, `TaskExplainDiff`, `TaskPrReviewApplyPlan`, `TaskReviewPlan` skill
 - 반응형 웹 UI 크기 규칙을 적용하는 `web-styling` skill
-- TASK/PRD 작업용 worktree와 로컬 `.codex`/`.env` 설정을 준비하는 `worktree` skill
+- TASK 작업용 worktree와 로컬 `.codex`/`.env` 설정을 준비하는 `worktree` skill
 - commit/branch/PR 작성 규칙
 - PR review/reference 문서
 - PR feedback apply/reference 문서

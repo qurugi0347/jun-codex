@@ -1,0 +1,4 @@
+interface:
+  display_name: "TaskExplainDiff"
+  short_description: "PR 코드를 대신 읽고 인터랙티브 HTML 학습 자료 생성"
+  default_prompt: "Use $TaskExplainDiff to explain a PR as a self-contained interactive HTML learning guide."
