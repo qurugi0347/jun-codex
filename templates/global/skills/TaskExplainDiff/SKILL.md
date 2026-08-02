@@ -1,6 +1,6 @@
 ---
 name: TaskExplainDiff
-description: PR, branch, commit, diff 등 코드 변경을 개발자가 원문 코드를 직접 읽지 않고 학습할 수 있도록 배경, 직관, 코드 흐름, 퀴즈를 포함한 self-contained HTML 설명서로 생성할 때 사용한다.
+description: PR, branch, commit, diff 등 코드 변경을 개발자가 원문 코드를 직접 읽지 않고 학습할 수 있도록 배경, 직관, 코드 흐름, 퀴즈를 포함한 self-contained HTML 설명서로 생성할 때 사용한다. PR 학습 자료는 저장소의 `.codex/explain-diff/`에 PR 번호별로 저장한다.
 ---
 
 # TaskExplainDiff
@@ -55,9 +55,12 @@ description: PR, branch, commit, diff 등 코드 변경을 개발자가 원문 �
 
 - CSS와 JavaScript를 파일 안에 포함한 단일 self-contained HTML 파일을 생성한다.
 - 전체 내용을 section header와 목차가 있는 하나의 긴 page로 구성한다. 최상위 구조에 tab을 사용하지 않는다.
-- 저장소 밖의 전역 임시 경로에 저장하고 파일명은 오늘 날짜로 시작한다.
+- PR URL이나 번호가 대상이면 저장소 root의 `.codex/explain-diff/`를 만들고 결과 HTML을 저장한다. 이 경로는 Git에서 추적하지 않는다.
+- PR 대상 파일명은 `pr-<번호>.html`로 고정한다. 예를 들어 PR 123의 결과는 `.codex/explain-diff/pr-123.html`이다.
+- PR 번호를 확인할 수 없는 branch, commit, local diff는 기존처럼 저장소 밖 전역 임시 경로에 저장한다.
 
 ```text
+<repository-root>/.codex/explain-diff/pr-<number>.html
 /tmp/YYYY-MM-DD-explanation-<slug>.html
 ```
 
@@ -89,7 +92,7 @@ description: PR, branch, commit, diff 등 코드 변경을 개발자가 원문 �
 - diagram이 ASCII가 아닌 HTML/CSS로 구성됐는지 확인한다.
 - 코드 블록의 줄바꿈이 유지되는지 확인한다.
 - 좁은 viewport에서 가로 scroll, 잘림, 겹침 없이 읽을 수 있는지 확인한다.
-- 결과 파일이 저장소 밖에 있고 `YYYY-MM-DD-`로 시작하는지 확인한다.
+- PR 대상 결과 파일이 `.codex/explain-diff/pr-<번호>.html`에 있는지 확인한다. PR 번호가 없는 대상은 기존 `YYYY-MM-DD-` 파일명 규칙을 확인한다.
 - 최종 응답에 생성한 HTML의 절대 경로를 clickable link로 제공한다.
 
 ## 참고

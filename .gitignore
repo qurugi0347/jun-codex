@@ -30,3 +30,4 @@ HANDOFF.md
 # Claude Code plan documents
 .claude/plan/
 .codex/plan/
+.codex/explain-diff/
