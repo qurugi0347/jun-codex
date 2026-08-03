@@ -1,7 +1,11 @@
 {
   "name": "jun-codex",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Codex global instructions, skills, and settings installer",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/qurugi0347/jun-codex"
+  },
   "main": "dist/index.js",
   "bin": {
     "jun-codex": "dist/cli.js"
