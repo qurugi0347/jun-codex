@@ -1,4 +1,4 @@
 interface:
-  display_name: "TaskExplainDiff"
-  short_description: "PR 코드를 대신 읽고 인터랙티브 HTML 학습 자료 생성"
-  default_prompt: "Use $TaskExplainDiff to explain a PR as a self-contained interactive HTML learning guide."
+  display_name: "Task Explain Diff"
+  short_description: "코드 변경을 배경과 구현, 퀴즈까지 깊이 있게 설명"
+  default_prompt: "Use $TaskExplainDiff to create a rich Korean explanation of the current code diff."

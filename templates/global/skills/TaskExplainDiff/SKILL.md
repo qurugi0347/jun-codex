@@ -1,100 +1,108 @@
 ---
 name: TaskExplainDiff
-description: PR, branch, commit, diff 등 코드 변경을 개발자가 원문 코드를 직접 읽지 않고 학습할 수 있도록 배경, 직관, 코드 흐름, 퀴즈를 포함한 self-contained HTML 설명서로 생성할 때 사용한다. PR 학습 자료는 저장소의 `.codex/explain-diff/`에 PR 번호별로 저장한다.
+description: 코드 변경, diff, 브랜치, PR을 배경부터 구현 흐름까지 깊이 설명하고 HTML 또는 Notion 형식의 학습 자료로 만들 때 사용한다.
 ---
 
 # TaskExplainDiff
 
-지정된 코드 변경을 대신 읽고, 사용자가 생성된 문서만으로 변경의 맥락과 동작을 학습할 수 있는 풍부한 인터랙티브 HTML 설명서를 만든다.
+<role>
 
-이 skill은 코드 리뷰나 결함 탐지가 아니라 변경 이해와 학습을 목적으로 한다. GitHub review comment를 게시하거나 코드를 수정하지 않는다.
+지정된 코드 변경을 처음 접하는 사람도 이해할 수 있는 설명 자료로 만든다. 변경 줄만 나열하지 않고 주변 코드와 기존 동작을 조사해 변화의 이유와 실행 흐름을 연결한다.
 
-## 사용 예시
+</role>
 
-- `$TaskExplainDiff PR 123을 코드 안 읽고 이해할 수 있게 HTML로 설명해줘`
-- `$TaskExplainDiff 현재 branch 변경사항을 학습 자료로 만들어줘`
+<instructions>
 
-## 분석 대상 수집
+1. 현재 checkout, diff, 브랜치, PR 또는 사용자가 지정한 파일에서 설명할 변경 범위를 정한다.
+2. 관련 코드, 호출부, 테스트, 설정, 데이터 모델을 살펴 기존 시스템과 변경 이후의 흐름을 파악한다.
+3. 아래 순서로 설명을 구성한다.
+   - **배경**: 초보자를 위한 넓은 맥락에서 시작해 변경에 직접 관련된 기존 구조와 동작으로 좁힌다.
+   - **직관**: 세부 구현보다 핵심 아이디어를 먼저 설명한다. 작은 예시 데이터와 전후 비교를 사용한다.
+   - **코드**: 파일 순서가 아니라 실행 또는 의존 흐름에 따라 변경을 묶어 높은 수준에서 안내한다.
+   - **퀴즈**: 변경의 동작, 원인, 계약, 예외 상황을 실제로 이해해야 풀 수 있는 중간 난도 객관식 문제 5개를 만든다. 각 선택에 정답 여부와 이유를 제공한다.
+4. 핵심 개념, 정의, 중요한 예외는 callout으로 강조한다. Flow, 구조, 컴포넌트 관계, 데이터 이동을 설명할 때는 줄글보다 Mermaid 다이어그램을 우선하고 예시 값을 포함한다.
+5. 사용자가 출력 형식을 지정하지 않으면 HTML로 만든다.
+   - **HTML**: CSS와 JavaScript를 포함한 단일 self-contained HTML 파일을 만든다. 목차가 있는 긴 한 페이지로 구성하고 모바일에서도 읽기 좋게 만든다.
+   - **Notion**: 사용자가 명시적으로 요청한 경우에만 Notion 도구로 새 페이지를 만들고 URL을 반환한다. 퀴즈 선택지는 toggle 블록으로 구성해 펼쳤을 때 정답 여부와 설명이 보이게 한다.
 
-- 사용자가 PR URL이나 번호를 지정하면 PR 제목, 본문, base/head branch, commit, 변경 파일과 diff를 읽는다.
-- remote가 GitHub이면 `gh pr view`와 `gh pr diff`를 읽기 전용으로 사용한다.
-- branch, commit, diff가 대상이면 적절한 base와 head를 확인하고 local Git diff를 읽는다.
-- diff만 보지 않고 관련 모듈, 호출 흐름, 문서, 테스트와 주변 코드를 폭넓게 탐색해 기존 시스템을 이해한다.
-- 사용자가 원문 코드를 다시 열어보지 않아도 되도록 설명 안에 필요한 맥락을 포함한다.
-- 대상을 특정할 수 없고 선택에 따라 결과가 달라질 때만 사용자에게 확인한다.
+</instructions>
 
-## 필수 섹션
+<html_template>
 
-### 1. 배경
+HTML 결과물을 만들 때 이 Skill 디렉터리의 `assets/explain-diff-template.html`을 시작점으로 사용한다.
 
-- 변경과 관련된 기존 시스템의 동작을 설명한다.
-- 처음 보는 개발자도 이해할 수 있는 넓은 배경부터 시작하고, 이번 변경에 직접 필요한 좁은 맥락으로 이어간다.
-- 이미 시스템을 아는 사용자가 건너뛸 수 있도록 깊은 배경은 명확한 하위 구획으로 분리한다.
+1. template을 최종 파일명 규칙에 맞는 경로로 복사한다.
+2. 원본의 색상, typography, 좌측 목차, hero, card, callout, table, diagram, step, details, quiz 스타일과 반응형 동작을 유지한다.
+3. `{{TABLE_OF_CONTENTS}}`와 `{{DOCUMENT_SECTIONS}}`는 실제 변경 내용에 맞춰 새로 구성한다. 예시 문서의 섹션 이름, 개수, 순서, 세부 구조를 그대로 따르지 않는다.
+4. 배경, 직관, 코드, 퀴즈를 포함하되, 그 밖의 섹션은 변경의 성격과 독자의 이해 흐름에 따라 추가·통합·재배열한다.
+5. 목차 항목은 실제 section과 1:1로 맞추고, 표시 순서와 번호를 본문 순서에 맞춘다.
+6. 사용하지 않는 component와 빈 영역을 제거하고 모든 `{{TOKEN}}`을 실제 내용으로 치환한다.
+7. Mermaid는 최종 HTML에 inline SVG로 렌더링해 외부 runtime 없이 표시한다.
 
-### 2. 직관
+</html_template>
 
-- 전체 세부사항보다 변경의 핵심 아이디어와 본질을 설명한다.
-- 작은 예제 데이터와 구체적인 상황을 사용한다.
-- 변경 전과 변경 후의 차이를 그림과 diagram으로 보여준다.
+<change_comparison>
 
-### 3. 코드
+변경 후 동작이나 구조를 설명할 때는 변경 전 상태와 함께 비교한다.
 
-- 변경 파일 순서가 아니라 이해하기 쉬운 논리적 단위와 실행 흐름으로 묶어 설명한다.
-- 각 변경이 전체 동작에서 담당하는 역할과 다른 구성요소에 미치는 영향을 연결한다.
-- 원문 코드를 읽지 않아도 이해할 수 있는 high-level walkthrough를 제공한다.
-- 코드 조각은 개념 이해에 꼭 필요한 최소 범위만 사용한다.
+1. 상세 설명보다 먼저 아래 형식의 비교표를 배치해 핵심 변화를 한눈에 보여준다.
 
-### 4. 퀴즈
+| 대상 | 변경 전 | 변경 후 | 상태 | 영향 |
+|------|---------|---------|------|------|
+| `<기능·구조·흐름>` | `<기존 동작>` | `<새 동작>` | `유지·변경·추가` | `<사용자·시스템 영향>` |
 
-- PR의 핵심 내용을 실제로 이해해야 풀 수 있는 중간 난이도 객관식 문제 5개를 만든다.
-- 함정 문제보다 핵심 개념, 데이터 흐름, 변경 이유와 영향 범위를 확인하는 문제를 사용한다.
-- 사용자가 선택지를 클릭하면 정답 여부와 구체적인 feedback을 바로 보여준다.
-- 각 오답에는 왜 틀렸는지, 정답에는 왜 맞는지 설명한다.
+2. 한 행에는 하나의 변화만 적고, 변경 전과 변경 후는 서로 대응하는 짧은 문장으로 작성한다.
+3. 구조나 Flow가 달라지면 같은 방향, 이름, 추상화 수준을 사용한 **변경 전**과 **변경 후** Mermaid 다이어그램을 나란히 배치한다. 모바일에서는 위아래로 배치한다.
+4. 두 다이어그램에서 같은 상태 색상과 범례를 사용한다.
+   - **유지**: 회색, `#E2E8F0` 배경과 `#475569` 테두리
+   - **변경**: 주황색, `#FEF3C7` 배경과 `#D97706` 테두리
+   - **추가**: 초록색, `#DCFCE7` 배경과 `#15803D` 테두리
+5. 색상만으로 상태를 구분하지 않도록 노드 이름에 `[유지]`, `[변경]`, `[추가]`를 표시하고 다이어그램 가까이에 범례를 둔다.
 
-## HTML 출력 형식
+Mermaid에는 아래 class를 일관되게 적용한다.
 
-- CSS와 JavaScript를 파일 안에 포함한 단일 self-contained HTML 파일을 생성한다.
-- 전체 내용을 section header와 목차가 있는 하나의 긴 page로 구성한다. 최상위 구조에 tab을 사용하지 않는다.
-- PR URL이나 번호가 대상이면 저장소 root의 `.codex/explain-diff/`를 만들고 결과 HTML을 저장한다. 이 경로는 Git에서 추적하지 않는다.
-- PR 대상 파일명은 `pr-<번호>.html`로 고정한다. 예를 들어 PR 123의 결과는 `.codex/explain-diff/pr-123.html`이다.
-- PR 번호를 확인할 수 없는 branch, commit, local diff는 기존처럼 저장소 밖 전역 임시 경로에 저장한다.
-
-```text
-<repository-root>/.codex/explain-diff/pr-<number>.html
-/tmp/YYYY-MM-DD-explanation-<slug>.html
+```mermaid
+flowchart LR
+classDef maintained fill:#E2E8F0,stroke:#475569,color:#0F172A;
+classDef changed fill:#FEF3C7,stroke:#D97706,color:#78350F,stroke-width:3px;
+classDef added fill:#DCFCE7,stroke:#15803D,color:#14532D,stroke-width:3px,stroke-dasharray:5 3;
 ```
 
-- 사용자가 다른 언어를 요청하지 않으면 본문과 퀴즈를 한글로 작성한다.
-- 명료하고 논리적이며 흥미롭게 읽히는 고전적 기술 문체를 사용하고 section 사이의 전환을 자연스럽게 구성한다.
-- 핵심 개념, 정의, 중요한 edge case에는 callout을 사용한다.
-- [`web-styling`](../web-styling/SKILL.md)을 적용해 mobile에서도 읽을 수 있는 반응형 layout과 접근성을 제공한다.
+</change_comparison>
 
-## Diagram 규칙
+<file_naming>
 
-- 설명 전체에서 재사용할 수 있는 소수의 diagram 유형을 선택해 일관성을 유지한다.
-- UI 변경은 사용자가 실제로 보는 화면을 단순화한 HTML mockup으로 설명한다.
-- 시스템 변경은 구성요소 사이의 통신과 data flow를 보여주는 diagram으로 설명한다.
-- data flow에는 구체적인 예제 데이터를 포함한다.
-- ASCII diagram 대신 HTML 요소와 CSS로 구성한 시각적 diagram을 사용한다.
-- 항목 목록은 HTML list로 표현한다.
+HTML 파일명은 현재 날짜의 `YYYY-MM-DD-` 접두사와 아래 규칙을 조합한다.
 
-## 코드 블록 규칙
+| 변경 기준 | 저장소 밖에 저장 | 해당 저장소 안에 저장 |
+|----------|------------------|------------------------|
+| PR | `YYYY-MM-DD-{repositoryName}-{prNumber}.html` | `YYYY-MM-DD-{prNumber}.html` |
+| PR 없는 브랜치 | `YYYY-MM-DD-{repositoryName}-{branch}.html` | `YYYY-MM-DD-{branch}.html` |
 
-- 코드 블록은 `<pre>`를 사용한다.
-- custom element로 코드 블록을 구성해야 하면 CSS에 `white-space: pre-wrap`을 지정한다.
-- 저장 전에 모든 코드 블록을 확인해 `white-space: pre` 또는 `pre-wrap`이 적용됐는지 검증한다.
+- 사용자가 저장 위치를 지정하지 않으면 저장소 밖에 저장한다.
+- `{repositoryName}`은 저장소 이름만 사용하고 `.git` suffix는 제외한다.
+- `{branch}`에 포함된 `/`는 `-`로 바꾼다. 예: `feature/login` -> `feature-login`.
+- 사용자가 파일명이나 저장 경로를 명시하면 해당 지시를 우선한다.
 
-## 완료 검증
+</file_naming>
 
-- 배경, 직관, 코드, 퀴즈 4개 필수 section과 목차가 모두 있는지 확인한다.
-- HTML 안에 필요한 CSS와 JavaScript가 포함되어 외부 asset 없이 열리는지 확인한다.
-- 객관식 5문제가 클릭과 keyboard로 동작하고 각 선택지에 feedback이 표시되는지 확인한다.
-- diagram이 ASCII가 아닌 HTML/CSS로 구성됐는지 확인한다.
-- 코드 블록의 줄바꿈이 유지되는지 확인한다.
-- 좁은 viewport에서 가로 scroll, 잘림, 겹침 없이 읽을 수 있는지 확인한다.
-- PR 대상 결과 파일이 `.codex/explain-diff/pr-<번호>.html`에 있는지 확인한다. PR 번호가 없는 대상은 기존 `YYYY-MM-DD-` 파일명 규칙을 확인한다.
-- 최종 응답에 생성한 HTML의 절대 경로를 clickable link로 제공한다.
+<rules>
 
-## 참고
+- 설명의 문단 사이를 자연스럽게 연결하고, 용어는 처음 등장할 때 풀어 쓴다.
+- Flow와 처리 순서는 `flowchart` 또는 `sequenceDiagram`, 시스템과 모듈 구조는 `flowchart` 또는 `classDiagram`, 상태 변화는 `stateDiagram`으로 표현한다.
+- Mermaid 다이어그램 앞뒤의 줄글은 다이어그램을 읽는 데 필요한 맥락과 핵심 해석만 간결하게 작성한다.
+- UI 변화는 단순화한 화면 모형으로, 컴포넌트 간 통신은 데이터 예시가 포함된 흐름도로 표현한다.
+- ASCII 다이어그램 대신 Mermaid를 우선하고, Mermaid로 표현하기 어려운 UI 모형이나 단순 비교에는 HTML 요소, 표, 목록 또는 출력 매체의 기본 블록을 사용한다.
+- HTML 결과물에서는 Mermaid가 네트워크 없이 보이도록 다이어그램을 인라인 SVG로 렌더링하거나 필요한 런타임을 파일 안에 포함한다.
+- HTML 코드 블록은 `<pre><code>`를 사용하고 `white-space: pre` 또는 `pre-wrap`을 명시한다.
+- HTML 퀴즈는 선택 즉시 피드백을 보여 주며 오프라인에서도 동작하게 만든다.
+- 조사한 코드가 뒷받침하는 사실과 해석을 구분한다.
 
-- 원형: [Geoffrey Litt의 explain-diff-html](https://gist.github.com/geoffreylitt/a29df1b5f9865506e8952488eac3d524)
+</rules>
+
+<reference>
+
+- 원문: https://gist.github.com/geoffreylitt/a29df1b5f9865506e8952488eac3d524
+- 원문의 `explain-diff-html.md`와 `explain-diff-notion.md`를 한국어로 통합·정리했다.
+
+</reference>
