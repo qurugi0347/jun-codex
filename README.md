@@ -109,12 +109,12 @@ $SessionWrap 현재 브랜치 작업 정리해줘
 | `Director` | 프로젝트 스펙 문서와 충돌 검증 |
 | `Documentation` | Codex 문서와 skill 작성 규칙 |
 | `Git` | 커밋, 브랜치, PR 생성, PR 리뷰, 리뷰 피드백 반영 |
-| `Planning` | `.codex/plan/` 문서 3종 작성 템플릿 |
+| `Planning` | `.codex/plan/` 기본 문서 4종 작성 템플릿 |
 | `PromptStructuring` | skill/프롬프트 구조화, frontmatter, 출력 최적화 |
 | `React` | React 컴포넌트, hook, router, form, styling 패턴 |
 | `Reporting` | 작업 결과 보고 형식 |
 | `SessionWrap` | 브랜치 diff 기반 세션 정리와 후속 작업 도출 |
-| `TaskPlan` | `.codex/plan/` 문서 3종 작성 |
+| `TaskPlan` | `.codex/plan/` 기본 문서 4종 작성 |
 | `TaskCodeWrite` | plan/checklist 기반 구현과 task 단위 검증 |
 | `TaskCodeReview` | plan과 구현 diff 기반 코드 리뷰 |
 | `TaskExplainDiff` | PR 코드를 대신 읽고 인터랙티브 HTML 학습 자료 생성 |
