@@ -102,26 +102,22 @@ gh api --method POST \
 4. 게시 후 `gh api "repos/{owner}/{repo}/pulls/{pr-number}/comments" --paginate`로 실제 comment와 URL을 확인한다.
 5. 일부 line이 유효하지 않아 review 게시가 실패하면 PR diff를 다시 읽고 anchor를 수정한 뒤 재시도한다.
 
-## PR 본문 템플릿
+## TaskExplainDiff 기반 PR 본문
 
-프로젝트 PR template이 있으면 아래 기본 템플릿보다 우선한다.
+### TaskExplainDiff 내용 적용
 
-```bash
-find . -maxdepth 1 -iname 'pull_request_template.md' -type f
-for dir in .github docs; do
-  if [ -d "$dir" ]; then
-    find "$dir" -maxdepth 3 \
-      \( -iname 'pull_request_template.md' -o -ipath '*/PULL_REQUEST_TEMPLATE/*.md' \) \
-      -type f
-  fi
-done
-```
+PR 본문을 작성할 때 TaskExplainDiff 조사 결과를 Markdown으로 사용한다. HTML·Notion 출력과 파일명 규칙은 PR 본문에 적용하지 않는다.
 
-- PR template의 제목, 섹션 순서, 체크리스트를 보존한다.
-- template의 기존 섹션에 요약, 의도, 문제, 해결 방법, 주요 변경사항, 사이드 이펙트, 호환성 깨짐 여부를 자연스럽게 채운다.
-- 기존 `Overview`가 있으면 Review Helper comment 기반 내용을 그 섹션에 채운다. 없으면 요약 다음에 `Overview`를 최소로 추가한다.
-- 대응되는 섹션이 없으면 가장 가까운 섹션에 짧게 녹이고, 중요한 항목이 빠질 때만 새 섹션을 최소로 추가한다.
-- 프로젝트 PR template이 없을 때만 아래 기본 템플릿을 사용한다.
+| PR 본문 | TaskExplainDiff 내용 |
+|---------|----------------------|
+| 요약 | 직관 |
+| 의도·문제 | 배경 |
+| 해결 방법·주요 변경사항 | 코드의 실행·의존 흐름 |
+| 사이드 이펙트·호환성 깨짐 | 계약·예외·영향 |
+| Overview | Review Helper가 있는 핵심 포인트의 변경 전후 비교와 URL |
+| 퀴즈 | 변경의 동작·원인·계약·예외를 확인하는 객관식 문제 5개 |
+
+항상 아래 구조로 PR 본문을 작성한다. TaskExplainDiff 내용 표에 따라 각 섹션을 채우고, `Overview`에는 게시된 Review Helper comment URL을 연결한다.
 
 ```markdown
 ## 요약
@@ -158,6 +154,19 @@ done
 | 영향 받는 영역 | 영향 내용 | 위험도 |
 |---------------|----------|--------|
 | 없음 | - | - |
+
+## 퀴즈
+
+변경의 동작, 원인, 계약, 예외를 확인하는 중간 난도 객관식 문제 5개를 작성합니다. 각 문제는 `<details>`와 `<summary>`로 접어 두고, 본문에 선택지별 정답 여부와 이유를 작성합니다.
+
+<details>
+<summary>Q1. 변경의 핵심 동작을 확인하는 질문</summary>
+
+- A. 선택지 — 정답/오답과 이유
+- B. 선택지 — 정답/오답과 이유
+</details>
+
+Q2~Q5도 같은 형식으로 작성합니다.
 ```
 
 `Overview`는 게시된 Review Helper comment와 1:1로 대응시킨다.
@@ -181,7 +190,7 @@ EOF
 1. PR을 생성하고 PR 번호와 head commit을 확인한다.
 2. 준비한 Review Helper inline comment를 게시한다.
 3. 게시된 comment URL을 수집한다.
-4. 프로젝트 template 구조를 보존한 최종 PR body의 `Overview`에 URL을 연결한다.
+4. 최종 PR body의 `Overview`에 URL을 연결한다.
 5. `gh pr edit <pr-number> --body-file <body-file>`로 최종 body를 반영하고 다시 읽어 확인한다.
 
 ## PR 완료 체크리스트
@@ -189,6 +198,8 @@ EOF
 - 사용 가능한 경우 `lint`가 통과한다.
 - 사용 가능한 경우 `build`가 통과한다.
 - PR 본문에 의도, 문제, 해결 방법이 포함된다.
+- PR 본문이 TaskExplainDiff 조사 결과와 모순되지 않고, 핵심 변경의 전후·흐름·예외를 포함한다.
+- PR 본문에 `<details><summary>` 형식의 퀴즈 5개와 선택지별 정답 여부·이유가 포함된다.
 - 중요 포인트마다 Review Helper comment가 있고 첫 줄이 `**[PR Review Helper]**`인지 확인한다.
 - 모든 Review Helper comment가 유효한 diff line에 연결됐는지 확인한다.
 - PR body의 Overview가 게시된 comment와 1:1로 대응하고 실제 URL을 포함하는지 확인한다.
