@@ -1,0 +1,4 @@
+interface:
+  display_name: "코드 이해"
+  short_description: "프로젝트와 변경을 대화형으로 이해하고 검증합니다"
+  default_prompt: "Use $understand-code to help me understand this project, feature, PR, or code change."
