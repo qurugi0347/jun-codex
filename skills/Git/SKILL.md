@@ -1,6 +1,6 @@
 ---
 name: Git
-description: Git 커밋, 브랜치, PR 작성, PR 리뷰, 리뷰 피드백 반영 작업에 사용한다. 한글 커밋/PR 규칙, 영향 분석, 안전한 Git 작업 절차와 PR Review Helper inline comment 및 Overview 작성 규칙을 포함한다.
+description: Git 커밋, 브랜치, PR 작성, PR 리뷰, 리뷰 피드백 반영 작업에 사용한다. 한글 커밋/PR 규칙, 영향 분석, 안전한 Git 작업 절차와 ExplainDiff 기반 PR 본문 작성 규칙을 포함한다.
 ---
 
 # Git
@@ -15,8 +15,7 @@ description: Git 커밋, 브랜치, PR 작성, PR 리뷰, 리뷰 피드백 반�
 | 커밋 요약 | 한글, 현재형, 가능하면 50자 이내 |
 | 커밋 단위 | 한 커밋은 한 가지 목적만 포함 |
 | PR 제목 | prefix 없이 간결한 한글 제목 |
-| PR 본문 | 항상 TaskExplainDiff의 배경·직관·코드 흐름·변경 전후 비교와 퀴즈를 Markdown 본문에 사용한다. `Overview`는 Review Helper comment와 연결 |
-| PR Review Helper | 중요 포인트의 대표 diff line에 `**[PR Review Helper]**`로 시작하는 inline comment를 남겨 동작과 고민을 설명 |
+| PR 본문 | `references/pr-create.md`의 ExplainDiff 기준을 적용해 배경·직관·실행 흐름·변경 전후 비교·퀴즈를 Markdown으로 구성한다 |
 | Git 안전 규칙 | 파일을 명시해서 add하고, 광범위 staging과 파괴적 명령을 피함 |
 
 ## 참고 문서

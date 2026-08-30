@@ -43,7 +43,7 @@ description: React 컴포넌트, hook, form, 라우팅 구현 시 기존 패턴�
 ## 설치 템플릿 구조
 
 ```text
-templates/global/skills/SkillName/
+skills/SkillName/
 ├── SKILL.md
 └── references/
     └── detail.md
